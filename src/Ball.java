@@ -7,6 +7,13 @@ import java.awt.*;
 
 public class Ball {
 
+	private double cx;
+	private double cy;
+	private double width;
+	private double height;
+	private Color color;
+	private double speed;
+
 	/**
 		Construtor da classe Ball. Observe que quem invoca o construtor desta classe define a velocidade da bola 
 		(em pixels por millisegundo), mas não define a direção deste movimento. A direção do movimento é determinada 
@@ -19,20 +26,26 @@ public class Ball {
 		@param color cor da bola.
 		@param speed velocidade da bola (em pixels por millisegundo).
 	*/
-
 	public Ball(double cx, double cy, double width, double height, Color color, double speed){
-	
+		this.cx = cx;
+		this.cy = cy;
+		this.width = width;
+		this.height = height;
+		this.color = color;
+		this.speed = speed;
 	}
-
 
 	/**
 		Método chamado sempre que a bola precisa ser (re)desenhada.
 	*/
-
 	public void draw(){
+		GameLib.setColor(this.color);
 
-		GameLib.setColor(Color.YELLOW);
-		GameLib.fillRect(400, 300, 20, 20);
+		/* 
+		 * TODO: pegar os parâmetros cx e cy deste método fillRect através do
+		 * dos parâmetros do método draw.
+		 */
+		GameLib.fillRect(400, 300, this.width, this.height);
 	}
 
 	/**
@@ -40,7 +53,6 @@ public class Ball {
 		
 		@param delta quantidade de millisegundos que se passou entre o ciclo anterior de atualização do jogo e o atual.
 	*/
-
 	public void update(long delta){
 
 	}
@@ -50,7 +62,6 @@ public class Ball {
 	
 		@param playerId uma string cujo conteúdo identifica um dos jogadores.
 	*/
-
 	public void onPlayerCollision(String playerId){
 
 	}
@@ -60,7 +71,6 @@ public class Ball {
 
 		@param wallId uma string cujo conteúdo identifica uma das paredes da quadra.
 	*/
-
 	public void onWallCollision(String wallId){
 
 	}
@@ -71,9 +81,7 @@ public class Ball {
 		@param wall referência para uma instância de Wall contra a qual será verificada a ocorrência de colisão da bola.
 		@return um valor booleano que indica a ocorrência (true) ou não (false) de colisão.
 	*/
-	
 	public boolean checkCollision(Wall wall){
-
 		return false;
 	}
 
@@ -83,9 +91,7 @@ public class Ball {
 		@param player referência para uma instância de Player contra o qual será verificada a ocorrência de colisão da bola.
 		@return um valor booleano que indica a ocorrência (true) ou não (false) de colisão.
 	*/	
-
 	public boolean checkCollision(Player player){
-
 		return false;
 	}
 
@@ -95,18 +101,15 @@ public class Ball {
 	*/
 	
 	public double getCx(){
-
-		return 400;
+		return this.cx;
 	}
 
 	/**
 		Método que devolve a coordenada y do centro do retângulo que representa a bola.
 		@return o valor double da coordenada y.
 	*/
-
 	public double getCy(){
-
-		return 300;
+		return this.cy;
 	}
 
 	/**
@@ -114,10 +117,7 @@ public class Ball {
 		@return o valor double da velocidade.
 
 	*/
-
 	public double getSpeed(){
-
-		return 0;
+		return this.speed;
 	}
-
 }
