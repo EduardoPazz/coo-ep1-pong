@@ -8,31 +8,30 @@ import java.awt.*;
 
 public class Score {
 
-	private int pontuation;
+	private int score;
+	private String playerId;
+
 	/**
 		Construtor da classe Score.
 
 		@param playerId uma string que identifica o player ao qual este placar está associado.
 	*/
-
 	public Score(String playerId){
-
+		this.playerId = playerId;
 	}
 
 	/**
 		Método de desenho do placar.
 	*/
-
 	public void draw() {
-		GameLib.drawText("Pontos: " + this.pontuation, 70, GameLib.ALIGN_RIGHT);		
+		GameLib.drawText("Score: " + this.score, 70, GameLib.ALIGN_RIGHT);		
 	}
 
 	/**
 		Método que incrementa em 1 unidade a contagem de pontos.
 	*/
-
 	public void inc(){
-		this.pontuation++;
+		this.score++;
 	}
 
 	/**
@@ -40,9 +39,7 @@ public class Score {
 
 		@return o valor inteiro referente ao total de pontos.
 	*/
-
 	public int getScore(){
-
-		return 0;
+		return this.score;
 	}
 }
