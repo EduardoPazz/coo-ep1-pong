@@ -122,6 +122,25 @@ public class Ball {
 	}
 
 	private double getRandomAngle() {
-		return Math.random() * 2 * Math.PI;
+		double randomAngle;
+
+
+		/**
+		 * Esse do...while evita que o ângulo que a bola assume seja
+		 * muito íngrime
+		 */
+		do {
+			randomAngle	= Math.random() * 2 * Math.PI;
+		} while (
+			// Evita que a bola aponte muito para cima
+			(randomAngle > Math.PI / 3) && (randomAngle < 2 * Math.PI / 3)
+
+			||
+
+			// Evita que a bola aponte muito para baixo
+			(randomAngle > 4 * Math.PI / 3) && (randomAngle < 5 * Math.PI / 3)
+		);
+
+		return randomAngle;
 	}
 }
