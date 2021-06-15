@@ -24,7 +24,7 @@ public class Score {
 		Método de desenho do placar.
 	*/
 	public void draw() {
-		GameLib.drawText("Score: " + this.score, 70, GameLib.ALIGN_RIGHT);		
+		GameLib.drawText("Score: " + playerId + this.score, 70, GameLib.ALIGN_RIGHT);		
 	}
 
 	/**

@@ -6,8 +6,15 @@ import java.awt.*;
 */
 
 public class Player {
-
+	
 	private double cx;
+	private double cy;
+	private double width;
+	private double height;
+	private Color color;
+	private String id;
+	private double [] v_limit;
+	private double speed;
 
 	/**
 		Construtor da classe Player.
@@ -23,7 +30,19 @@ public class Player {
 	*/
 
 	public Player(double cx, double cy, double width, double height, Color color, String id, double[] v_limit, double speed){
+		
 		this.cx = cx;
+		this.cy = cy;
+		this.width = width;
+		this.height = height;
+		this.color = color;
+		this.id = id;
+		this.v_limit = v_limit;
+		this.speed = speed;
+		
+		// s / t = v
+		// s = t * v
+	
 	}
 
 	/**
@@ -32,8 +51,8 @@ public class Player {
 
 	public void draw(){
 
-		GameLib.setColor(Color.MAGENTA);
-		GameLib.fillRect(80, 300, 20, 100);
+		GameLib.setColor(this.color);
+		GameLib.fillRect(this.cx, this.cy, this.width, this.height);
 	}
 
 	/**
@@ -45,7 +64,8 @@ public class Player {
 	*/
 
 	public void moveUp(long delta){
-
+		this.cy -= delta * this.speed;
+		
 	}
 
 	/**
@@ -57,6 +77,8 @@ public class Player {
 	*/
 
 	public void moveDown(long delta){
+		this.cy += delta * this.speed;
+
 
 	}
 
@@ -67,7 +89,7 @@ public class Player {
 
 	public String getId() { 
 
-		return ""; 
+		return this.id; 
 	}
 
 	/**
@@ -77,7 +99,7 @@ public class Player {
 
 	public double getWidth() { 
 
-		return 20; 
+		return this.width; 
 	}
 
 	/**
@@ -87,7 +109,7 @@ public class Player {
 
 	public double getHeight() { 
 
-		return 100;
+		return this.height;
 	}
 
 	/**
@@ -107,7 +129,7 @@ public class Player {
 
 	public double getCy() { 
 	
-		return 300;
+		return this.cy;
 	}
 }
 

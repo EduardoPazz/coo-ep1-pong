@@ -13,6 +13,7 @@ public class Ball {
 	private double height;
 	private Color color;
 	private double speed;
+	private double angle;
 
 	/**
 		Construtor da classe Ball. Observe que quem invoca o construtor desta classe define a velocidade da bola 
@@ -33,6 +34,7 @@ public class Ball {
 		this.height = height;
 		this.color = color;
 		this.speed = speed;
+		this.angle = this.getRandomAngle();
 	}
 
 	/**
@@ -40,12 +42,7 @@ public class Ball {
 	*/
 	public void draw(){
 		GameLib.setColor(this.color);
-
-		/* 
-		 * TODO: pegar os parâmetros cx e cy deste método fillRect através do
-		 * dos parâmetros do método draw.
-		 */
-		GameLib.fillRect(400, 300, this.width, this.height);
+		GameLib.fillRect(this.cx, this.cy, this.width, this.height);
 	}
 
 	/**
@@ -54,7 +51,10 @@ public class Ball {
 		@param delta quantidade de millisegundos que se passou entre o ciclo anterior de atualização do jogo e o atual.
 	*/
 	public void update(long delta){
+		double distanceTravelled = delta * this.speed;
 
+		this.cx += distanceTravelled * Math.cos(angle);
+		this.cy -= distanceTravelled * Math.sin(angle);
 	}
 
 	/**
@@ -119,5 +119,9 @@ public class Ball {
 	*/
 	public double getSpeed(){
 		return this.speed;
+	}
+
+	private double getRandomAngle() {
+		return Math.random() * 2 * Math.PI;
 	}
 }
