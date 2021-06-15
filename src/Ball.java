@@ -129,9 +129,7 @@ public class Ball {
 		 * Esse do...while evita que o ângulo que a bola assume seja
 		 * muito íngrime
 		 */
-		do {
-			randomAngle	= Math.random() * 2 * Math.PI;
-		} while (
+		do randomAngle = Math.random() * 2 * Math.PI; while (
 			// Evita que a bola aponte muito para cima
 			(randomAngle > Math.PI / 3) && (randomAngle < 2 * Math.PI / 3)
 
