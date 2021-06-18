@@ -62,8 +62,8 @@ public class Ball {
 	
 		@param playerId uma string cujo conteúdo identifica um dos jogadores.
 	*/
-	public void onPlayerCollision(String playerId){
-
+	public void onPlayerCollision(String playerId){		
+		this.angle = Math.PI - this.angle;
 	}
 
 	/**
@@ -72,7 +72,11 @@ public class Ball {
 		@param wallId uma string cujo conteúdo identifica uma das paredes da quadra.
 	*/
 	public void onWallCollision(String wallId){
+		if (wallId == "Left" || wallId == "Right") 
+			this.angle = Math.PI - this.angle;
 
+		else if (wallId == "Top" || wallId == "Bottom")
+			this.angle = 2 * Math.PI - this.angle;
 	}
 
 	/**
@@ -81,8 +85,36 @@ public class Ball {
 		@param wall referência para uma instância de Wall contra a qual será verificada a ocorrência de colisão da bola.
 		@return um valor booleano que indica a ocorrência (true) ou não (false) de colisão.
 	*/
-	public boolean checkCollision(Wall wall){
-		return false;
+	public boolean checkCollision(Wall wall) {
+		boolean hadCollision;
+
+		/**
+		 * TODO: pensar numa maneira mais inteligente de fazer isso, 
+		 * possivelmente usando funções anônimas
+		 */
+		switch (wall.getId()) {
+			case "Left":
+				double leftLimit = wall.getCx() + wall.getWidth() / 2;
+				hadCollision = leftLimit >= this.cx;	
+				break;
+		
+			case "Right":
+				double rightLimit = wall.getCx() - wall.getWidth() / 2;
+				hadCollision = this.cx >= rightLimit;
+				break;
+
+			case "Top":
+				double topLimit = wall.getCy() + wall.getHeight() / 2;
+				hadCollision = this.cy <= topLimit;
+				break;
+
+			default: // Bottom
+				double bottomLimit = wall.getCy() - wall.getHeight() / 2;
+				hadCollision = this.cy >= bottomLimit;
+				break;
+		}
+		// System.out.println("Wall Colision:" + hadCollision);
+		return hadCollision;
 	}
 
 	/**
@@ -92,7 +124,50 @@ public class Ball {
 		@return um valor booleano que indica a ocorrência (true) ou não (false) de colisão.
 	*/	
 	public boolean checkCollision(Player player){
-		return false;
+
+		double topLimit = player.getCy() - player.getHeight() / 2;
+		double bottomLimit = player.getCy() + player.getHeight() / 2;
+
+		double rightLimit;
+		double leftLimit;
+
+		/**
+		 * TODO: pensar numa maneira mais inteligente de fazer isso, 
+		 * possivelmente usando funções anônimas
+		 */
+		if (player.getId() == "Player 1") { // Left Player
+
+			rightLimit = player.getCx() + player.getWidth() / 2;
+
+			/**
+			 * Define-se um limite à esquerda baseado na velocidade da bola 
+			 * para evitar que a ela, em um de seus movimentos, possa ignorar o
+			 * limite direito.
+			 */
+			// leftLimit = rightLimit - this.speed;
+			leftLimit = player.getCx() - player.getWidth() / 2;
+
+		} else { // Right Player
+
+			leftLimit = player.getCx() - player.getWidth() / 2;
+
+			/**
+			 * Define-se um limite à direta baseado na velocidade da bola 
+			 * para evitar que a ela, em um de seus movimentos, possa ignorar o
+			 * limite esquerdo.
+			 */
+			// rightLimit = leftLimit + this.speed;
+			rightLimit = player.getCx() + player.getWidth() / 2;
+		}
+
+		boolean hadCollision =
+			(this.cx <= rightLimit)
+			&& (this.cx >= leftLimit)
+			&& (this.cy >= topLimit)
+			&& (this.cy <= bottomLimit);
+
+		if (hadCollision) System.out.println("Player Colision:" + hadCollision);
+		return hadCollision;
 	}
 
 	/**
