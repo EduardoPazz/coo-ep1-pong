@@ -18,7 +18,6 @@ public class Player {
 
 	/**
 		Construtor da classe Player.
-
 		@param cx coordenada x da posição inicial do player (centro do retangulo que o representa).
 		@param cy coordenada y da posição inicial do player (centro do retangulo que o representa).
 		@param width largura do retangulo que representa o player.
@@ -53,18 +52,23 @@ public class Player {
 
 		GameLib.setColor(this.color);
 		GameLib.fillRect(this.cx, this.cy, this.width, this.height);
+		
+		
 	}
 
 	/**
 		Método chamado quando se deseja mover o player para cima. 
 		Este método é chamado sempre que a tecla associada à ação 
 		de mover o player para cima estiver pressionada.
-
 		@param delta quantidade de millisegundos que se passou entre o ciclo anterior de atualização do jogo e o atual.
 	*/
 
 	public void moveUp(long delta){
-		this.cy -= delta * this.speed;
+		
+		if(this.cy > v_limit[0]){
+			this.cy -= delta * this.speed;
+		
+		}
 		
 	}
 
@@ -72,14 +76,15 @@ public class Player {
 		Método chamado quando se deseja mover o player para baixo. 
 		Este método é chamado sempre que a tecla associada à ação 
 		de mover o player para baixo estiver pressionada.
-
 		@param delta quantidade de millisegundos que se passou entre o ciclo anterior de atualização do jogo e o atual.
 	*/
 
 	public void moveDown(long delta){
-		this.cy += delta * this.speed;
+		
+		if(this.cy < v_limit[1]){
+			this.cy += delta * this.speed;
 
-
+		}
 	}
 
 	/**
@@ -132,4 +137,3 @@ public class Player {
 		return this.cy;
 	}
 }
-
