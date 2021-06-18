@@ -63,13 +63,9 @@ public class Player {
 		@param delta quantidade de millisegundos que se passou entre o ciclo anterior de atualização do jogo e o atual.
 	*/
 
-	public void moveUp(long delta){
-		
-		if(this.cy > v_limit[0]){
-			this.cy -= delta * this.speed;
-		
-		}
-		
+	public void moveUp(long delta) {
+		double top = this.cy - this.height / 2;
+		if(top > v_limit[0]) this.cy -= delta * this.speed;		
 	}
 
 	/**
@@ -80,11 +76,8 @@ public class Player {
 	*/
 
 	public void moveDown(long delta){
-		
-		if(this.cy < v_limit[1]){
-			this.cy += delta * this.speed;
-
-		}
+		double bottom = this.cy + this.height / 2;
+		if(bottom < v_limit[1]) this.cy += delta * this.speed;
 	}
 
 	/**
