@@ -1,5 +1,7 @@
 import java.awt.*;
 
+import javax.print.event.PrintEvent;
+
 /**
 	Esta classe representa a bola usada no jogo. A classe princial do jogo (Pong)
 	instancia um objeto deste tipo quando a execução é iniciada.
@@ -130,7 +132,7 @@ public class Ball {
 				hadCollision = bottomBallSide >= topWallSide;
 				break;
 		}
-		System.out.println("Wall Colision:" + hadCollision);
+		// System.out.println("Wall Colision:" + hadCollision);
 		return hadCollision;
 	}
 
@@ -143,8 +145,6 @@ public class Ball {
 	public boolean checkCollision(Player player){
 
 		double playerBottomSide = player.getCy() + player.getHeight() / 2;
-		double playerRightSide = player.getCx() + player.getWidth() / 2;
-		double playerLeftSide = player.getCx() - player.getWidth() / 2;
 		double playerTopSide = player.getCy() - player.getHeight() / 2;
 
 		double ballBottomSide = this.cy + this.height /2;
@@ -157,27 +157,34 @@ public class Ball {
 		 * possivelmente usando funções anônimas
 		 */
 
+		boolean directionToRight = (this.angle < Math.PI / 3) && (this.angle > 5 * Math.PI / 3);
 
-		// boolean hadCollision =
-		// 	(ballLeftSide <= playerRightSide)
-		// 	&& (ballRightSide >= playerLeftSide)
-		// 	&& (ballBottomSide >= playerTopSide)
-		// 	&& (ballTopSide <= playerBottomSide);
+		boolean hadCollision = false;
 
-		boolean hadCollision;
+		boolean isBetweenTopAndBottom = (ballTopSide >= playerTopSide)
+			&& (ballBottomSide <= playerBottomSide);
+
+		if (isBetweenTopAndBottom) {
+			if (!directionToRight) {
+				double playerRightSide = player.getCx() + player.getWidth() / 2;
+				hadCollision = (ballLeftSide <= playerRightSide) 
+					&& (ballLeftSide >= player.getCx() - this.speed)
+					&& (ballRightSide > playerRightSide); 
+				System.out.println("1");
+			}
+			else {
+				double playerLeftSide = player.getCx() - player.getWidth() / 2;
+				hadCollision = (ballRightSide >= playerLeftSide)
+					&& (ballRightSide <= player.getCx() + this.speed)
+					&& (ballLeftSide < playerLeftSide);
+				System.out.println("2");
+			}
+		}
 		
-		boolean rightCollision = (ballLeftSide <= playerRightSide)
-			&& (ballTopSide >= playerTopSide)
-			&& (ballBottomSide <= playerBottomSide);
+		// boolean rightCollision = (ballLeftSide <= playerRightSide);
 
-		boolean leftCollision = (ballRightSide >= playerLeftSide)
-			&& (ballTopSide >= playerTopSide)
-			&& (ballBottomSide <= playerBottomSide);
+		// boolean leftCollision = (ballRightSide >= playerLeftSide);
 
-		hadCollision = rightCollision ^ leftCollision;
-
-
-		// switch (player.getId()) {
 		// 	case "Left":
 		// 		double rightWallSide = player.getCx() + player.getWidth() / 2;
 		// 		double leftBallSide = this.cx - this.width / 2;
