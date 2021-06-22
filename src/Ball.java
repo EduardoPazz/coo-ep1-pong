@@ -75,11 +75,9 @@ public class Ball {
 		@param wallId uma string cujo conteúdo identifica uma das paredes da quadra.
 	*/
 	public void onWallCollision(String wallId){
-		if (wallId == "Left" || wallId == "Right") 
-			this.angle = Math.PI - this.angle;
-
-		else if (wallId == "Top" || wallId == "Bottom")
-			this.angle = 2 * Math.PI - this.angle;
+		this.angle = ( wallId == "Left" || wallId == "Right" )
+			? ( Math.PI - this.angle )
+			: ( 2 * Math.PI - this.angle );
 	}
 
 	/**
