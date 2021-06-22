@@ -88,49 +88,29 @@ public class Ball {
 	*/
 	public boolean checkCollision(Wall wall) {
 		boolean hadCollision;
-		// double topLimit = wall.getCy() - wall.getHeight() / 2;
-		// double bottomLimit = wall.getCy() + wall.getHeight() / 2;
 
-		// double rightLimit = wall.getCx() + wall.getWidth() / 2;
-		// double leftLimit = wall.getCx() - wall.getWidth() / 2;
-		
-		// boolean hadCollision =
-		// 	(this.cx <= rightLimit)
-		// 	&& (this.cx >= leftLimit)
-		// 	&& (this.cy >= topLimit)
-		// 	&& (this.cy <= bottomLimit);
-		/**
-		 * TODO: pensar numa maneira mais inteligente de fazer isso, 
-		 * possivelmente usando funções anônimas
-		 */
 		switch (wall.getId()) {
 			case "Left":
 				double rightWallSide = wall.getCx() + wall.getWidth() / 2;
-				double leftBallSide = this.cx - this.width / 2;
-				hadCollision = rightWallSide >= leftBallSide;	
+				hadCollision = rightWallSide >= this.getLeftSide();	
 				break;
 		
 			case "Right":
-				//double rightLimit = wall.getCx() - wall.getWidth() / 2;
 				double leftWallSide = wall.getCx() - wall.getWidth() / 2;
-				double rightBallSide = this.cx + this.width / 2;
-				hadCollision = leftWallSide <= rightBallSide;
+				hadCollision = leftWallSide <= this.getRightSide();
 				break;
 
 			case "Top":
 				double bottomWallSide = wall.getCy() + wall.getHeight() / 2;
-				double topBallSide = this.cy - this.height / 2;
-				hadCollision = topBallSide <= bottomWallSide;
+				hadCollision = this.getTopSide() <= bottomWallSide;
 				break;
 
 			default: // Bottom
-				//double bottomLimit = wall.getCy() - wall.getHeight() / 2;
 				double topWallSide = wall.getCy() - wall.getHeight() / 2;
-				double bottomBallSide = this.cy + this.height /2;
-				hadCollision = bottomBallSide >= topWallSide;
+				hadCollision = this.getBottomSide() >= topWallSide;
 				break;
 		}
-		// System.out.println("Wall Colision:" + hadCollision);
+		
 		return hadCollision;
 	}
 
@@ -260,5 +240,21 @@ public class Ball {
 		);
 
 		return randomAngle;
+	}
+
+	private double getLeftSide() {
+		return this.cx - this.width / 2;
+	}
+
+	private double getRightSide() {
+		return this.cx + this.width / 2;
+	}
+
+	private double getTopSide() {
+		return this.cy - this.height / 2;
+	}
+
+	private double getBottomSide() {
+		return this.cy + this.height / 2;
 	}
 }
