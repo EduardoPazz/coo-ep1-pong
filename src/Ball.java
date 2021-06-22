@@ -33,8 +33,8 @@ public class Ball {
 		this.width = width;
 		this.height = height;
 		this.color = color;
-		// this.speed = speed;
-		this.speed = .1;
+		this.speed = speed;
+		// this.speed = .1;
 		this.angle = this.getRandomAngle();
 	}
 
@@ -157,38 +157,6 @@ public class Ball {
 			}
 		}
 		
-		// boolean rightCollision = (ballLeftSide <= playerRightSide);
-
-		// boolean leftCollision = (ballRightSide >= playerLeftSide);
-
-		// 	case "Left":
-		// 		double rightWallSide = player.getCx() + player.getWidth() / 2;
-		// 		double leftBallSide = this.cx - this.width / 2;
-		// 		hadCollision = rightWallSide >= leftBallSide;	
-		// 		break;
-		
-		// 	case "Right":
-		// 		//double rightLimit = wall.getCx() - wall.getWidth() / 2;
-		// 		double leftWallSide = player.getCx() - player.getWidth() / 2;
-		// 		double rightBallSide = this.cx + this.width / 2;
-		// 		hadCollision = leftWallSide <= rightBallSide;
-		// 		break;
-
-		// 	case "Top":
-		// 		double bottomWallSide = player.getCy() + player.getHeight() / 2;
-		// 		double topBallSide = this.cy - this.height / 2;
-		// 		hadCollision = topBallSide <= bottomWallSide;
-		// 		break;
-
-		// 	default: // Bottom
-		// 		//double bottomLimit = wall.getCy() - wall.getHeight() / 2;
-		// 		double topWallSide = player.getCy() - player.getHeight() / 2;
-		// 		double bottomBallSide = this.cy + this.height /2;
-		// 		hadCollision = bottomBallSide >= topWallSide;
-		// 		break;
-		// }
-
-
 		if (hadCollision) System.out.println("Player Colision:" + hadCollision);
 		return hadCollision;
 	}
@@ -222,10 +190,9 @@ public class Ball {
 	private double getRandomAngle() {
 		double randomAngle;
 
-
 		/**
 		 * Esse do...while evita que o ângulo que a bola assume seja
-		 * muito íngrime
+		 * muito vertical ou muito horizontal
 		 */
 		do randomAngle = Math.random() * 2 * Math.PI; while (
 			// Evita que a bola aponte muito para cima
@@ -235,6 +202,17 @@ public class Ball {
 
 			// Evita que a bola aponte muito para baixo
 			(randomAngle > 4 * Math.PI / 3) && (randomAngle < 5 * Math.PI / 3)
+
+			||
+
+			// Evita que a bola aponte muito para esquerda
+			(randomAngle > 5 * Math.PI / 6) && (randomAngle < 6 * Math.PI / 6)
+
+			||
+
+			// Evita que a bola aponte muito para direita
+			(randomAngle > 11 * Math.PI / 6) && (randomAngle < Math.PI / 6)
+
 		);
 
 		return randomAngle;
