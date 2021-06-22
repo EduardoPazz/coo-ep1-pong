@@ -5,7 +5,7 @@ import java.awt.*;
 	instancia dois objetos deste tipo quando a execução é iniciada.
 */
 
-public class Player {
+public class Player implements Rectangle {
 	
 	private double cx;
 	private double cy;
@@ -15,6 +15,7 @@ public class Player {
 	private String id;
 	private double [] v_limit;
 	private double speed;
+
 
 	/**
 		Construtor da classe Player.
@@ -38,10 +39,6 @@ public class Player {
 		this.id = id;
 		this.v_limit = v_limit;
 		this.speed = speed;
-		
-		// s / t = v
-		// s = t * v
-	
 	}
 
 	/**
@@ -52,8 +49,6 @@ public class Player {
 
 		GameLib.setColor(this.color);
 		GameLib.fillRect(this.cx, this.cy, this.width, this.height);
-		
-		
 	}
 
 	/**
@@ -64,8 +59,8 @@ public class Player {
 	*/
 
 	public void moveUp(long delta) {
-		double top = this.cy - this.height / 2;
-		if(top > v_limit[0]) this.cy -= delta * this.speed;		
+	//	double top = this.cy - this.height / 2;
+		if(getTopSide() > v_limit[0]) this.cy -= delta * this.speed;		
 	}
 
 	/**
@@ -76,8 +71,8 @@ public class Player {
 	*/
 
 	public void moveDown(long delta){
-		double bottom = this.cy + this.height / 2;
-		if(bottom < v_limit[1]) this.cy += delta * this.speed;
+	//	double bottom = this.cy + this.height / 2;
+		if(getBottomSide() < v_limit[1]) this.cy += delta * this.speed;
 	}
 
 	/**
@@ -129,4 +124,16 @@ public class Player {
 	
 		return this.cy;
 	}
+
+//	this.top = cy - height / 2;
+//	this.bottom = cy + height / 2;
+
+	private double getTopSide() {
+		return this.cy - this.height / 2;
+	}
+
+	private double getBottomSide() {
+		return this.cy + this.height / 2;
+	}
+
 }

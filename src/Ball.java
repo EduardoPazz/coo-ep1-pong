@@ -5,7 +5,7 @@ import java.awt.*;
 	instancia um objeto deste tipo quando a execução é iniciada.
 */
 
-public class Ball {
+public class Ball implements Rectangle {
 
 	private double cx;
 	private double cy;

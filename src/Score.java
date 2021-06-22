@@ -23,11 +23,15 @@ public class Score {
 		Método de desenho do placar.
 	*/
 	public void draw() {
-		if(this.playerId == "Player 1"){
-			GameLib.drawText(this.playerId + ": " + this.score, 70, GameLib.ALIGN_LEFT);
-		} else
-			GameLib.drawText(this.playerId + ": " + this.score, 70, GameLib.ALIGN_RIGHT);
+
+		/**
+		 * Como não dá para alterar o uso do construtor do Player para adicionar
+		 * um atributo "ALIGN", é necessário fazer essa gambiarra aqui que utiliza
+		 * o fato do Player 1 ser sempre a esquerda o Player 2 sempre à direita
+		 */
+		int align = this.playerId == "Player 1" ? GameLib.ALIGN_LEFT : GameLib.ALIGN_RIGHT;
 					
+		GameLib.drawText(this.playerId + ": " + this.score, 70, GameLib.ALIGN_LEFT);
 	}
 
 	/**
