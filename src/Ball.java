@@ -1,7 +1,5 @@
 import java.awt.*;
 
-import javax.print.event.PrintEvent;
-
 /**
 	Esta classe representa a bola usada no jogo. A classe princial do jogo (Pong)
 	instancia um objeto deste tipo quando a execução é iniciada.
@@ -110,7 +108,7 @@ public class Ball {
 				hadCollision = this.getBottomSide() >= topWallSide;
 				break;
 		}
-		
+
 		return hadCollision;
 	}
 
