@@ -5,7 +5,7 @@ import java.awt.*;
 	instancia um objeto deste tipo quando a execução é iniciada.
 */
 
-public class Ball implements Rectangle {
+public class Ball {
 
 	private double cx;
 	private double cy;
@@ -89,22 +89,22 @@ public class Ball implements Rectangle {
 
 		switch (wall.getId()) {
 			case "Left":
-				double rightWallSide = wall.getCx() + wall.getWidth() / 2;
+				double rightWallSide = Sides.getSide(Side.RIGHT, wall.getCx(), wall.getWidth());
 				hadCollision = rightWallSide >= this.getLeftSide();	
 				break;
 		
 			case "Right":
-				double leftWallSide = wall.getCx() - wall.getWidth() / 2;
+				double leftWallSide = Sides.getSide(Side.LEFT, wall.getCx(), wall.getWidth());
 				hadCollision = leftWallSide <= this.getRightSide();
 				break;
 
 			case "Top":
-				double bottomWallSide = wall.getCy() + wall.getHeight() / 2;
+				double bottomWallSide = Sides.getSide(Side.BOTTOM, wall.getCy(), wall.getHeight());
 				hadCollision = this.getTopSide() <= bottomWallSide;
 				break;
 
 			default: // Bottom
-				double topWallSide = wall.getCy() - wall.getHeight() / 2;
+				double topWallSide = Sides.getSide(Side.TOP, wall.getCy(), wall.getHeight());
 				hadCollision = this.getBottomSide() >= topWallSide;
 				break;
 		}
@@ -120,43 +120,24 @@ public class Ball implements Rectangle {
 	*/	
 	public boolean checkCollision(Player player){
 
-		double playerBottomSide = player.getCy() + player.getHeight() / 2;
-		double playerTopSide = player.getCy() - player.getHeight() / 2;
+		double playerTopSide = Sides.getSide(Side.TOP, player.getCy(), player.getHeight());
+		double playerLeftSide = Sides.getSide(Side.LEFT, player.getCx(), player.getWidth());
+		double playerRightSide = Sides.getSide(Side.RIGHT, player.getCx(), player.getWidth());
+		double playerBottomSide = Sides.getSide(Side.BOTTOM, player.getCy(), player.getHeight());
 
 		double ballBottomSide = this.cy + this.height /2;
 		double ballRightSide = this.cx + this.width / 2;
 		double ballLeftSide = this.cx - this.width / 2;
 		double ballTopSide = this.cy - this.height / 2;
 
-		/**
-		 * TODO: pensar numa maneira mais inteligente de fazer isso, 
-		 * possivelmente usando funções anônimas
-		 */
 
-		boolean directionToRight = (this.angle < Math.PI / 3) && (this.angle > 5 * Math.PI / 3);
 
-		boolean hadCollision = false;
-
-		boolean isBetweenTopAndBottom = (ballTopSide >= playerTopSide)
-			&& (ballBottomSide <= playerBottomSide);
-
-		if (isBetweenTopAndBottom) {
-			if (!directionToRight) {
-				double playerRightSide = player.getCx() + player.getWidth() / 2;
-				hadCollision = (ballLeftSide <= playerRightSide) 
-					&& (ballLeftSide >= player.getCx() - this.speed)
-					&& (ballRightSide > playerRightSide); 
-				System.out.println("1");
-			}
-			else {
-				double playerLeftSide = player.getCx() - player.getWidth() / 2;
-				hadCollision = (ballRightSide >= playerLeftSide)
-					&& (ballRightSide <= player.getCx() + this.speed)
-					&& (ballLeftSide < playerLeftSide);
-				System.out.println("2");
-			}
-		}
+		boolean hadCollision = (ballTopSide >= playerTopSide)
+			&& (ballBottomSide <= playerBottomSide)
+			&& (ballLeftSide <= playerRightSide) 
+			&& (ballRightSide >= playerLeftSide);
 		
+
 		if (hadCollision) System.out.println("Player Colision:" + hadCollision);
 		return hadCollision;
 	}

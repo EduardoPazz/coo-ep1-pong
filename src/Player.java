@@ -5,7 +5,7 @@ import java.awt.*;
 	instancia dois objetos deste tipo quando a execução é iniciada.
 */
 
-public class Player implements Rectangle {
+public class Player {
 	
 	private double cx;
 	private double cy;
