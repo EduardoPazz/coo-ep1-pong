@@ -123,19 +123,19 @@ public class Player {
 		return this.cy;
 	}
 
-	private double getTopSide() {
+	public double getTopSide() {
 		return this.cy - this.height / 2;
 	}
 
-	private double getBottomSide() {
+	public double getBottomSide() {
 		return this.cy + this.height / 2;
 	}
 
-	private double getLeftSide() {
+	public double getLeftSide() {
 		return this.cx - this.width / 2;
 	}
 
-	private double getRightSide() {
+	public double getRightSide() {
 		return this.cx + this.width / 2;
 	}
 

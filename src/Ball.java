@@ -89,22 +89,22 @@ public class Ball {
 
 		switch (wall.getId()) {
 			case "Left":
-				double rightWallSide = Sides.getSide(Side.RIGHT, wall.getCx(), wall.getWidth());
-				hadCollision = rightWallSide >= this.getLeftSide();	
+				double rightWallSide = wall.getCx() + wall.getWidth() / 2;
+				hadCollision = this.getLeftSide() <= rightWallSide;
 				break;
 		
 			case "Right":
-				double leftWallSide = Sides.getSide(Side.LEFT, wall.getCx(), wall.getWidth());
-				hadCollision = leftWallSide <= this.getRightSide();
+				double leftWallSide = wall.getCx() - wall.getWidth() / 2;
+				hadCollision = this.getRightSide() >= leftWallSide;
 				break;
 
 			case "Top":
-				double bottomWallSide = Sides.getSide(Side.BOTTOM, wall.getCy(), wall.getHeight());
+				double bottomWallSide = wall.getCy() + wall.getHeight() / 2;
 				hadCollision = this.getTopSide() <= bottomWallSide;
 				break;
 
 			default: // Bottom
-				double topWallSide = Sides.getSide(Side.TOP, wall.getCy(), wall.getHeight());
+				double topWallSide = wall.getCy() - wall.getHeight() / 2;
 				hadCollision = this.getBottomSide() >= topWallSide;
 				break;
 		}
@@ -120,23 +120,24 @@ public class Ball {
 	*/	
 	public boolean checkCollision(Player player){
 
-		double playerTopSide = Sides.getSide(Side.TOP, player.getCy(), player.getHeight());
-		double playerLeftSide = Sides.getSide(Side.LEFT, player.getCx(), player.getWidth());
-		double playerRightSide = Sides.getSide(Side.RIGHT, player.getCx(), player.getWidth());
-		double playerBottomSide = Sides.getSide(Side.BOTTOM, player.getCy(), player.getHeight());
+		double playerTopSide = player.getTopSide();
+		double playerLeftSide = player.getLeftSide();
+		double playerRightSide = player.getRightSide();
+		double playerBottomSide = player.getBottomSide();
 
-		double ballBottomSide = this.cy + this.height /2;
-		double ballRightSide = this.cx + this.width / 2;
-		double ballLeftSide = this.cx - this.width / 2;
-		double ballTopSide = this.cy - this.height / 2;
+		double ballBottomSide = this.getBottomSide();
+		double ballRightSide = this.getRightSide();
+		double ballLeftSide = this.getLeftSide();
+		double ballTopSide = this.getTopSide();
 
 
+		boolean isBetweenTopAndBottom = (ballTopSide >= playerTopSide)
+			&& (ballBottomSide <= playerBottomSide);
 
-		boolean hadCollision = (ballTopSide >= playerTopSide)
-			&& (ballBottomSide <= playerBottomSide)
-			&& (ballLeftSide <= playerRightSide) 
+		boolean hadCollision = isBetweenTopAndBottom
+			&& (ballLeftSide <= playerRightSide)
 			&& (ballRightSide >= playerLeftSide);
-		
+			
 
 		System.out.println("Player Colision:" + hadCollision);
 		return hadCollision;
@@ -175,7 +176,7 @@ public class Ball {
 		 * Esse do...while evita que o ângulo que a bola assume seja
 		 * muito vertical ou muito horizontal
 		 */
-		do randomAngle = Math.random() * 2 * Math.PI; while (
+		do randomAngle = (Math.random() * 2 * Math.PI); while (
 			// Evita que a bola aponte muito para cima
 			(randomAngle > Math.PI / 3) && (randomAngle < 2 * Math.PI / 3)
 
