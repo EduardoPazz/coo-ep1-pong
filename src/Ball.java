@@ -138,7 +138,7 @@ public class Ball {
 			&& (ballRightSide >= playerLeftSide);
 		
 
-		if (hadCollision) System.out.println("Player Colision:" + hadCollision);
+		System.out.println("Player Colision:" + hadCollision);
 		return hadCollision;
 	}
 
