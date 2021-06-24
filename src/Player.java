@@ -59,8 +59,7 @@ public class Player {
 	*/
 
 	public void moveUp(long delta) {
-	//	double top = this.cy - this.height / 2;
-		if(getTopSide() > v_limit[0]) this.cy -= delta * this.speed;		
+		if(this.getTopSide() > v_limit[0]) this.cy -= delta * this.speed;		
 	}
 
 	/**
@@ -71,8 +70,7 @@ public class Player {
 	*/
 
 	public void moveDown(long delta){
-	//	double bottom = this.cy + this.height / 2;
-		if(getBottomSide() < v_limit[1]) this.cy += delta * this.speed;
+		if(this.getBottomSide() < v_limit[1]) this.cy += delta * this.speed;
 	}
 
 	/**
@@ -125,15 +123,20 @@ public class Player {
 		return this.cy;
 	}
 
-//	this.top = cy - height / 2;
-//	this.bottom = cy + height / 2;
-
 	private double getTopSide() {
 		return this.cy - this.height / 2;
 	}
 
 	private double getBottomSide() {
 		return this.cy + this.height / 2;
+	}
+
+	private double getLeftSide() {
+		return this.cx - this.width / 2;
+	}
+
+	private double getRightSide() {
+		return this.cx + this.width / 2;
 	}
 
 }
