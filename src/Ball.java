@@ -14,7 +14,6 @@ public class Ball {
 	private Color color;
 	private double speed;
 	private double angle;
-	private byte cooldown;
 
 	/**
 		Construtor da classe Ball. Observe que quem invoca o construtor desta classe define a velocidade da bola 
@@ -35,7 +34,6 @@ public class Ball {
 		this.height = height;
 		this.color = color;
 		this.speed = speed;
-		this.speed = .2;
 		this.angle = this.getRandomAngle();
 	}
 
@@ -65,10 +63,7 @@ public class Ball {
 		@param playerId uma string cujo conteúdo identifica um dos jogadores.
 	*/
 	public void onPlayerCollision(String playerId){		
-		// if (this.cooldown == 0) {
-			this.angle = Math.PI - this.angle;
-			// this.cooldown = 10;
-		// } else this.cooldown--;
+		this.angle = Math.PI - this.angle;
 	}
 
 	/**
@@ -135,15 +130,18 @@ public class Ball {
 		double ballTopSide = this.getTopSide();
 
 
-		boolean isBetweenTopAndBottom = (ballTopSide >= playerTopSide)
-			&& (ballBottomSide <= playerBottomSide);
+		boolean isNotBetweenTopAndBottom = 
+			!(((ballTopSide <= playerBottomSide)
+			&& (ballBottomSide <= playerBottomSide + this.height))
+			^ 
+			((ballBottomSide >= playerTopSide) 
+			&& (ballTopSide >= playerTopSide - this.height)));
 
-		boolean hadCollision = isBetweenTopAndBottom
+		boolean hadCollision = isNotBetweenTopAndBottom
 			&& (ballLeftSide <= playerRightSide)
 			&& (ballRightSide >= playerLeftSide);
 			
 
-		System.out.println("Player Colision:" + hadCollision);
 		return hadCollision;
 	}
 
